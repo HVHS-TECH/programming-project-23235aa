@@ -1,6 +1,8 @@
 /*******************************************************/
 // setup()
 /*******************************************************/
+let spawnTimer = 2000;
+let rad = 15
 function setup() {
 console.log("setup: ");
 canvasWidth = 500;
@@ -13,25 +15,21 @@ wallRH.color = 'blue';
 wallBot = new Sprite(250,500,500,50,'k');
 wallBot.color = 'red';
 wallTop = new Sprite(250, 10, 500, 50, 'k');
-player_1 = new Sprite(100/2, 500/2, 50, 'd');
-player_1.color = 'cyan';
-player_1.vel.x = 20;
-player_1.bounciness = 0.5;
-player_1.friction = 20;
-player_1.drag = 1;
-targetGroup = new Group(); 
-tennisBalls = new Group();
+player_1 = new Sprite(500/2, 500/2, 50, 's');
+mouseDetection = (mouseX,mouseY)
+targetWidth = random(10,500)
+targetHeight = random(10,500)
+target = createVector(targetWidth, targetHeight)
 }
 function draw() {
 	background('white')
-	ball_1.moveTowards(mouseX, mouseY, 0.5);
+	cicrcle =(targetWidth, targetHeight)
+	circle.life = 60;
 
 }
-function keyPressed(){
-		if (keyCode === 32){
-			shootBalls();
+function mousePressed(){
+	let dis = p5.Vector.dist(mouseDetection,target)
+	if (dis > rad){
+		target = new Sprite(targetWidth, targetHeight)
 	}
-};
-function shootBalls(){
-	balls = new Sprite(player_1.x,player_)
 }
