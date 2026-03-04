@@ -15,7 +15,6 @@ function setup() {
 	wallTop = new Sprite(250, 10, 500, 50, 'k');
 	player_1 = new Sprite(500/2, 500/2, 50, 'd');
 	player_1.color = 'blue';
-	player_1.vel.x = 5;
 	player_1.bounciness = 5;
 	player_1.friction = 20;
 	player_1.drag = 1;	
@@ -23,16 +22,50 @@ function setup() {
 }
 function draw() {
 	background('white')
+	if (mouse.presses()) {
+shootTennisBalls();
+};
+if (kb.pressing('left')) {
+
+    // Set sprite's velocity to the left
+	player_1.vel.x = -2;
+
 }
-function mousePressed(){
-	shootTennisBalls();
+
+else if (kb.pressing ('right')) {
+
+   	player_1.vel.x =  2;
+
+};
+
+if (kb.released('left')) {
+
+    // Set sprite's velocity to zero
+player_1.vel.x = 0;
+}
+else if (kb.released('right')){
+	player_1.vel.x = 0;
+}
+if (kb.pressing('up')){
+	player_1.vel.y = -2
+}
+else if (kb.pressing('down')){
+	player_1.vel.y = 2
+}
+if (kb.released('up')){
+	player_1.vel.y = 0
+}
+else if (kb.released('down')){
+	player_1.vel.y = 0
+}
 };
 function shootTennisBalls(){
 	balls = new Sprite(player_1.x, player_1.y,10);
 	balls.color = 'red'
 	balls.speed = 5;
-	//The tennis balls head toward the way the mouse is pointing. 
-	balls.direction = balls.angleTo(mouse);
+	//The tennis balls head toward the way the mouse is pointing. callculates the angle between the balls and the mouse.
+	//By recognizing this the ball is able to head towards the mouse	 
+	balls.direction = balls.angleTo(mouse)
 	//Added this feature so that the tennis balls don't collide with the player and go in weird directions.
 	//Doing this the tennis balls overlap the player which means they can't collide. 
 	balls.overlap(player_1);
