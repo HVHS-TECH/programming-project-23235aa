@@ -1,6 +1,8 @@
 /*******************************************************/
 // setup()
 /*******************************************************/
+let spawnTimer = 2000;
+let rad = 15
 function setup() {
 	console.log("setup: ");
 	canvasWidth = 500;
@@ -25,18 +27,8 @@ function draw() {
 	background('white')
 }
 function mousePressed(){
-	shootTennisBalls();
-};
-function shootTennisBalls(){
-	balls = new Sprite(player_1.x, player_1.y,10);
-	balls.color = 'red'
-	balls.speed = 5;
-	//The tennis balls head toward the way the mouse is pointing. 
-	balls.direction = balls.angleTo(mouse);
-	//Added this feature so that the tennis balls don't collide with the player and go in weird directions.
-	//Doing this the tennis balls overlap the player which means they can't collide. 
-	balls.overlap(player_1);
-	//added in groups to handle future colloisions with targets. 
-	tennisBalls.add(balls);
-	balls.life = 60;
+	let dis = p5.Vector.dist(mouseDetection,target)
+	if (dis > rad){
+		target = new Sprite(targetWidth, targetHeight)
+	}
 }
