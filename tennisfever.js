@@ -19,6 +19,13 @@ function setup() {
 	player_1.friction = 20;
 	player_1.drag = 1;	
 	tennisBalls = new Group();
+	tennisTarget = new Group();
+	for (i = 0; i < 5; i++) {
+  target = new Sprite(200,200,60,60,'d')
+target.friction = 0.5;
+target.speed = 2.9;
+tennisTarget.add(target);
+}
 }
 function draw() {
 	background('white')
@@ -33,14 +40,13 @@ if (kb.pressing('left')) {
 }
 
 else if (kb.pressing ('right')) {
-
+//Set sprit's velocity to the right 
    	player_1.vel.x =  2;
 
 };
 
 if (kb.released('left')) {
-
-    // Set sprite's velocity to zero
+//Sprit doesn't move when not moved. 
 player_1.vel.x = 0;
 }
 else if (kb.released('right')){
@@ -48,21 +54,25 @@ else if (kb.released('right')){
 }
 if (kb.pressing('up')){
 	player_1.vel.y = -2
+	//Sprite moves up
 }
 else if (kb.pressing('down')){
 	player_1.vel.y = 2
+	//Sprite moves down
 }
 if (kb.released('up')){
 	player_1.vel.y = 0
 }
 else if (kb.released('down')){
 	player_1.vel.y = 0
-}
 };
+tennisTarget.moveTowards(player_1,0.005)
+}
+
 function shootTennisBalls(){
 	balls = new Sprite(player_1.x, player_1.y,10);
 	balls.color = 'red'
-	balls.speed = 5;
+	balls.vel.x = 5;
 	//The tennis balls head toward the way the mouse is pointing. callculates the angle between the balls and the mouse.
 	//By recognizing this the ball is able to head towards the mouse	 
 	balls.direction = balls.angleTo(mouse)
