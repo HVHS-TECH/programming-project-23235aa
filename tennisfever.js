@@ -81,5 +81,6 @@ function shootTennisBalls(){
 	balls.overlap(player_1);
 	//added in groups to handle future colloisions with targets. 
 	tennisBalls.add(balls);
-	balls.life = 60;
+	balls.life = 59;
+
 }
