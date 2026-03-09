@@ -19,12 +19,14 @@ function setup() {
 	player_1.friction = 20;
 	player_1.drag = 1;	
 	tennisBalls = new Group();
-	tennisTarget = new Group();
+	targetGroup = new Group();
 	for (i = 0; i < 5; i++) {
-  target = new Sprite(200,200,60,60,'d')
+		targetSpawnX = random(0,500)//making sure that the target don't sapwn at the same place and are clumped together
+		targetSpawnY = random(0,500)//making sure that the target don't sapwn at the same place and are clumped together
+  target = new Sprite(targetSpawnX,targetSpawnY,60,60,'d')
 target.friction = 0.5;
 target.speed = 2.9;
-tennisTarget.add(target);
+targetGroup.add(target);
 }
 }
 function draw() {
@@ -66,7 +68,7 @@ if (kb.released('up')){
 else if (kb.released('down')){
 	player_1.vel.y = 0
 };
-tennisTarget.moveTowards(player_1,0.005)
+targetGroup.moveTowards(player_1,0.005)//The targets move towards the player
 }
 
 function shootTennisBalls(){
@@ -81,6 +83,6 @@ function shootTennisBalls(){
 	balls.overlap(player_1);
 	//added in groups to handle future colloisions with targets. 
 	tennisBalls.add(balls);
-	balls.life = 59;
+	balls.life = 60;
 
 }
