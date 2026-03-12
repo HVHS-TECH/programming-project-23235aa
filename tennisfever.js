@@ -99,7 +99,7 @@ function draw() {
 		_tennisBalls.remove();
 		target2SpawnX = random(0, 500);
 		target2SpawnY = random(0, 500);
-		target2 = new Sprite(target2SpawnX, targetSpawnY, 60, 60, 'd')
+		target2 = new Sprite(target2SpawnX, target2SpawnY, 60, 60, 'd')
 		targetGroup.add(target2);
 		target2.image = (imgTarget)
 		imgTarget.resize(50, 50);
