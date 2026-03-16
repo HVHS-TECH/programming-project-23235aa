@@ -3,6 +3,7 @@
 /*******************************************************/
 let timeLimit = 10;
 let countDown;
+let score = 0;
 function preload() {
 
 	imgTennisplayer = loadImage('assets/images/tennisplayer.png');
@@ -44,10 +45,11 @@ function setup() {
 		target = new Sprite(targetSpawnX, targetSpawnY, 60, 60, 'd')
 		target.friction = 0.5;
 		target.speed = 1.3;
+		target.image = (imgTarget);
+		imgTarget.resize(50, 50)
 		targetGroup.add(target);//Make sure that every target moves towards the player
 	}
-	target.image = (imgTarget)
-	imgTarget.resize(50, 50)
+
 }
 
 function draw() {
@@ -103,6 +105,7 @@ function draw() {
 		targetGroup.add(target2);
 		target2.image = (imgTarget)
 		imgTarget.resize(50, 50);
+		score = score + 1;
 	}//Called the remove fucntion inside the draw loop becuase I want a new Target to spawn in and I need a loop for that
 	//Also used the groups to call them as they conrtol everything about the sprite. Could not have used the sprite becuase it is
 	//only called in a function. 
@@ -110,13 +113,18 @@ function draw() {
 		print("Game Over")
 		noLoop();
 	}
-	let currentTime = int(millis()/1000)
+	let currentTime = int(millis() / 1000)
 	countDown = timeLimit - currentTime;
-	if (countDown < 0){
+	if (countDown < 0) {
 		countDown = 0;
 		textSize(32);
-		text("Game/")
+		text("Game Over", 0, 100)
+		noLoop();
 	}
+	textSize(22);
+	text("TIME: " + countDown, 0, 50)
+	textSize(10);
+	text("SCORE: " + score , 420,50)
 }
 function shootTennisBalls() {
 	balls = new Sprite(player_1.x, player_1.y, 10);
