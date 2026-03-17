@@ -1,9 +1,9 @@
 /*******************************************************/
 // setup()
 /*******************************************************/
-let timeLimit = 10;
-let countDown;
-let score = 0;
+let timeLimit = 10; // The timer has a time limit for 10 seconds
+let countdown = 0; // This keeps track of the time limit
+let score = 0; // This is the score varible that I made. It's use comes further down.
 function preload() {
 
 	imgTennisplayer = loadImage('assets/images/tennisplayer.png');
@@ -31,7 +31,6 @@ function setup() {
 	tennisBalls = new Group();
 	targetGroup = new Group();
 	for (i = 0; i < 5; i++) {
-		let targetSpawnX, targetSpawnY;
 		let minDistanceFromPlayer = 150;  //The minimum distance I want between the player and the target so they don't collide
 		do {
 			targetSpawnX = random(0, 500)//making sure that the target don't spawn at the same place and are clumped together.
@@ -96,16 +95,19 @@ function draw() {
 	};
 	targetGroup.moveTowards(player_1, 0.05)//The targets move towards the player
 	targetGroup.collides(tennisBalls, func2Call);
-	function func2Call(_target, _tennisBalls) {
+	function func2Call(_target, _tennisBalls,) {
 		_target.remove();
 		_tennisBalls.remove();
-		target2SpawnX = random(0, 500);
-		target2SpawnY = random(0, 500);
+		let minDistanceFromPlayer = 150;
+		do {
+			target2SpawnX = random(0, 500);
+			target2SpawnY = random(0, 500);
+		} while (dist(target2SpawnX, target2SpawnY, player_1.x, player_1.y) < minDistanceFromPlayer)
 		target2 = new Sprite(target2SpawnX, target2SpawnY, 60, 60, 'd')
 		targetGroup.add(target2);
 		target2.image = (imgTarget)
 		imgTarget.resize(50, 50);
-		score = score + 1;
+		score = score + 1; // Increses my score by 1 everytime my tennis balls collide with the target
 	}//Called the remove fucntion inside the draw loop becuase I want a new Target to spawn in and I need a loop for that
 	//Also used the groups to call them as they conrtol everything about the sprite. Could not have used the sprite becuase it is
 	//only called in a function. 
@@ -113,18 +115,20 @@ function draw() {
 		print("Game Over")
 		noLoop();
 	}
-	let currentTime = int(millis() / 1000)
-	countDown = timeLimit - currentTime;
-	if (countDown < 0) {
-		countDown = 0;
-		textSize(32);
-		text("Game Over", 0, 100)
+	let currentTime = int(millis() / 1000); // Millis is the amount of milliseconds passsed since the setup function has started.
+	// The int(millis()/1000) is there to convert the time to seconds. We have to divide the millis to convert the milliseconds to seconds.
+	//Int makes sure that there are no decimals for example - 2.5
+	countdown = timeLimit - currentTime //Countdown is the time limit - the amount of time passed.
+	//If the time limit has passed, keep the countdown at 0
+	if (countdown < 0) {
+		countdown = 0;
+		textSize(24);
+		text("Game Over", 50, 100)
 		noLoop();
 	}
-	textSize(22);
-	text("TIME: " + countDown, 0, 50)
-	textSize(10);
-	text("SCORE: " + score , 420,50)
+	textSize(18); //The size of the text
+	text("Time: " + currentTime, 0, 50)
+	text("SCORE: " + score, 400, 50)
 }
 function shootTennisBalls() {
 	balls = new Sprite(player_1.x, player_1.y, 10);
