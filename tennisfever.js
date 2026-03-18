@@ -4,6 +4,7 @@
 let timeLimit = 10; // The timer has a time limit for 10 seconds
 let countdown = 0; // This keeps track of the time limit
 let score = 0; // This is the score varible that I made. It's use comes further down.
+
 function preload() {
 
 	imgTennisplayer = loadImage('assets/images/tennisplayer.png');
