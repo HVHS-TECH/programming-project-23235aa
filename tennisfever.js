@@ -1,6 +1,7 @@
 /*******************************************************/
 // setup()
 /*******************************************************/
+let gameState = "menu";
 let timeLimit = 10; // The timer has a time limit for 10 seconds
 let countdown = 0; // This keeps track of the time limit
 let score = 0; // This is the score varible that I made. It's use comes further down.
@@ -53,6 +54,13 @@ function setup() {
 }
 
 function draw() {
+	if (gameState === "menu"){
+		drawMenu();
+	} else if(gameState === "play"){
+		drawGame();
+	} else if (gameState === "gameover"){
+		drawGameOver();
+	};
 	background('white')
 	player_1.rotation = 0;
 	if (mouse.presses()) {
@@ -130,6 +138,12 @@ function draw() {
 	textSize(18); //The size of the text
 	text("Time: " + currentTime, 0, 50)
 	text("SCORE: " + score, 400, 50)
+}
+function drawMenu() {
+	console.log("Menu Sc reen")
+	cnv = new Canvas(500,500);
+	text("Press Mouse Button to start Game" , 250,250);
+	textSize(35);
 }
 function shootTennisBalls() {
 	balls = new Sprite(player_1.x, player_1.y, 10);
