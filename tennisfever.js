@@ -15,7 +15,8 @@ function setup() {
 	console.log("setup: ");
 	canvasWidth = 500;
 	canvasHeight = 500;
-	cnv = new Canvas(canvasWidth, canvasHeight);
+	cnv = new Canvas(canvasWidth,canvasHeight)
+	gameState = "menu"
 	wallLH = new Sprite(0, 500 / 2, 8, 500, 'k');
 	wallLH.color = 'black';
 	wallRH = new Sprite(500, 500 / 2, 5, 500, 'k');
@@ -50,10 +51,9 @@ function setup() {
 		imgTarget.resize(50, 50)
 		targetGroup.add(target);//Make sure that every target moves towards the player
 	}
-
 }
-
 function draw() {
+	background('white')
 	if (gameState === "menu"){
 		drawMenu();
 	} else if(gameState === "play"){
@@ -61,13 +61,21 @@ function draw() {
 	} else if (gameState === "gameover"){
 		drawGameOver();
 	};
-	background('white')
-	player_1.rotation = 0;
 	if (mouse.presses()) {
 		shootTennisBalls();
 	};
 
 
+}
+function drawMenu() {
+	console.log("Menu Screen")
+	textSize(25)
+	text("Press Space Bar", 200,200)
+	if (kb.pressing('space')){
+		gameState = 'play'
+	}
+}
+function drawGame(){
 	if (kb.pressing('left')) {
 
 		// Set sprite's velocity to the left
@@ -138,12 +146,6 @@ function draw() {
 	textSize(18); //The size of the text
 	text("Time: " + currentTime, 0, 50)
 	text("SCORE: " + score, 400, 50)
-}
-function drawMenu() {
-	console.log("Menu Sc reen")
-	cnv = new Canvas(500,500);
-	text("Press Mouse Button to start Game" , 250,250);
-	textSize(35);
 }
 function shootTennisBalls() {
 	balls = new Sprite(player_1.x, player_1.y, 10);
