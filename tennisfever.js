@@ -2,8 +2,10 @@
 // setup()
 /*******************************************************/
 let gameState = "menu";
+let player_1,wallLH,wallBot,wallRH,wallTop,target,target2,balls
 let timeLimit = 10; // The timer has a time limit for 10 seconds
 let countdown = 0; // This keeps track of the time limit
+let currentTime // the amount of time passed since the setup function is called 
 let score = 0; // This is the score varible that I made. It's use comes further down.
 
 function preload() {
@@ -34,12 +36,12 @@ function setup() {
 	tennisBalls = new Group();
 	targetGroup = new Group();
 	for (i = 0; i < 5; i++) {
-		let minDistanceFromPlayer = 150;  //The minimum distance I want between the player and the target so they don't collide
+		let minDistanceFromPlayer = 200;  //The minimum distance I want between the player and the target so they don't collide
 		do {
-			targetSpawnX = random(0, 500)//making sure that the target don't spawn at the same place and are clumped together.
+			targetSpawnX = random(50, 500)//making sure that the target don't spawn at the same place and are clumped together.
 			//Also it keeps on choosing a new value of x until if the disatnce between target
 			//  and the player is lower than the previous defined one
-			targetSpawnY = random(0, 500)//making sure that the target don't sapwn at the same place and are clumped together
+			targetSpawnY = random(50, 500)//making sure that the target don't sapwn at the same place and are clumped together
 			//Also it keeps on choosing a new value of y until if the disatnce between target
 			//  and the player is lower than the previous defined one
 		} while (dist(targetSpawnX, targetSpawnY, player_1.x, player_1.y) < minDistanceFromPlayer); //If the distance is lower it keeps on telling 
@@ -61,13 +63,16 @@ function draw() {
 	} else if (gameState === "gameover"){
 		drawGameOver();
 	};
-	if (mouse.presses()) {
-		shootTennisBalls();
-	};
-
-
 }
 function drawMenu() {
+	player_1.visible = false;
+	wallBot.visible = false;
+	wallLH.visible = false;
+	wallRH.visible = false;
+	wallTop.visible = false;
+	wallBot.visible = false;
+	targetGroup.visible = false;
+	tennisBalls.visible = false;
 	console.log("Menu Screen")
 	textSize(25)
 	text("Press Space Bar", 200,200)
@@ -76,6 +81,17 @@ function drawMenu() {
 	}
 }
 function drawGame(){
+	player_1.visible = true;
+	wallBot.visible = true;
+	wallLH.visible = true;
+	wallRH.visible = true;
+	wallTop.visible = true;
+	wallBot.visible = true;
+	targetGroup.visible = true;
+	tennisBalls.visible = true;
+	if (mouse.presses()) {
+		shootTennisBalls();
+	};
 	if (kb.pressing('left')) {
 
 		// Set sprite's velocity to the left
@@ -115,10 +131,10 @@ function drawGame(){
 	function func2Call(_target, _tennisBalls,) {
 		_target.remove();
 		_tennisBalls.remove();
-		let minDistanceFromPlayer = 150;
+		let minDistanceFromPlayer = 200;
 		do {
-			target2SpawnX = random(0, 500);
-			target2SpawnY = random(0, 500);
+			target2SpawnX = random(50, 500);
+			target2SpawnY = random(50, 500);
 		} while (dist(target2SpawnX, target2SpawnY, player_1.x, player_1.y) < minDistanceFromPlayer)
 		target2 = new Sprite(target2SpawnX, target2SpawnY, 60, 60, 'd')
 		targetGroup.add(target2);
@@ -129,23 +145,32 @@ function drawGame(){
 	//Also used the groups to call them as they conrtol everything about the sprite. Could not have used the sprite becuase it is
 	//only called in a function. 
 	if (player_1.collides(targetGroup)) {
-		print("Game Over")
-		noLoop();
+		gameState = 'gameover'
 	}
-	let currentTime = int(millis() / 1000); // Millis is the amount of milliseconds passsed since the setup function has started.
+		let currentTime = int(millis() / 1000); // Millis is the amount of milliseconds passsed since the setup function has started.
 	// The int(millis()/1000) is there to convert the time to seconds. We have to divide the millis to convert the milliseconds to seconds.
 	//Int makes sure that there are no decimals for example - 2.5
 	countdown = timeLimit - currentTime //Countdown is the time limit - the amount of time passed.
 	//If the time limit has passed, keep the countdown at 0
 	if (countdown < 0) {
 		countdown = 0;
-		textSize(24);
-		text("Game Over", 50, 100)
-		noLoop();
+		gameState = 'gameover' // If the time limit is 0 it goes to the game over screen becuase the game ends.
 	}
 	textSize(18); //The size of the text
 	text("Time: " + currentTime, 0, 50)
 	text("SCORE: " + score, 400, 50)
+}
+function drawGameOver(){
+	player_1.visible = false;
+	wallBot.visible = false;
+	wallLH.visible = false;
+	wallRH.visible = false;
+	wallTop.visible = false;
+	wallBot.visible = false;
+	targetGroup.visible = false;
+	tennisBalls.visible = false;
+	textSize(25)
+	text("Your Score Was " + score, 200,200)
 }
 function shootTennisBalls() {
 	balls = new Sprite(player_1.x, player_1.y, 10);
