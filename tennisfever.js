@@ -2,12 +2,13 @@
 // setup()
 /*******************************************************/
 let gameState = "menu";
-let player_1,wallLH,wallBot,wallRH,wallTop,target,target2,balls
+let timerStarted = false; // Acts like a switch for the timer
+let startTime = 0; // Store the amount of time since the game has started
+let player_1, wallLH, wallBot, wallRH, wallTop, target, target2, balls
 let timeLimit = 10; // The timer has a time limit for 10 seconds
 let countdown = 0; // This keeps track of the time limit
 let currentTime // the amount of time passed since the setup function is called 
 let score = 0; // This is the score varible that I made. It's use comes further down.
-
 function preload() {
 
 	imgTennisplayer = loadImage('assets/images/tennisplayer.png');
@@ -17,7 +18,7 @@ function setup() {
 	console.log("setup: ");
 	canvasWidth = 500;
 	canvasHeight = 500;
-	cnv = new Canvas(canvasWidth,canvasHeight)
+	cnv = new Canvas(canvasWidth, canvasHeight)
 	gameState = "menu"
 	wallLH = new Sprite(0, 500 / 2, 8, 500, 'k');
 	wallLH.color = 'black';
@@ -47,8 +48,8 @@ function setup() {
 		} while (dist(targetSpawnX, targetSpawnY, player_1.x, player_1.y) < minDistanceFromPlayer); //If the distance is lower it keeps on telling 
 		//the computer to do the do loop
 		target = new Sprite(targetSpawnX, targetSpawnY, 60, 60, 'd')
-		target.friction = 0.5;
-		target.speed = 1.3;
+		target.friction = 2.0;
+		target.speed = 0.0002;
 		target.image = (imgTarget);
 		imgTarget.resize(50, 50)
 		targetGroup.add(target);//Make sure that every target moves towards the player
@@ -56,11 +57,11 @@ function setup() {
 }
 function draw() {
 	background('white')
-	if (gameState === "menu"){
+	if (gameState === "menu") {
 		drawMenu();
-	} else if(gameState === "play"){
+	} else if (gameState === "play") {
 		drawGame();
-	} else if (gameState === "gameover"){
+	} else if (gameState === "gameover") {
 		drawGameOver();
 	};
 }
@@ -75,12 +76,12 @@ function drawMenu() {
 	tennisBalls.visible = false;
 	console.log("Menu Screen")
 	textSize(25)
-	text("Press Space Bar", 200,200)
-	if (kb.pressing('space')){
+	text("Press Space Bar", 200, 200)
+	if (kb.pressing('space')) {
 		gameState = 'play'
 	}
 }
-function drawGame(){
+function drawGame() {
 	player_1.visible = true;
 	wallBot.visible = true;
 	wallLH.visible = true;
@@ -131,12 +132,14 @@ function drawGame(){
 	function func2Call(_target, _tennisBalls,) {
 		_target.remove();
 		_tennisBalls.remove();
-		let minDistanceFromPlayer = 200;
+		let minDistanceFromPlayer = 300;
 		do {
 			target2SpawnX = random(50, 500);
 			target2SpawnY = random(50, 500);
 		} while (dist(target2SpawnX, target2SpawnY, player_1.x, player_1.y) < minDistanceFromPlayer)
 		target2 = new Sprite(target2SpawnX, target2SpawnY, 60, 60, 'd')
+		target2.friction = 2.0;
+		target2.speed = 0.0002;
 		targetGroup.add(target2);
 		target2.image = (imgTarget)
 		imgTarget.resize(50, 50);
@@ -160,7 +163,7 @@ function drawGame(){
 	text("Time: " + currentTime, 0, 50)
 	text("SCORE: " + score, 400, 50)
 }
-function drawGameOver(){
+function drawGameOver() {
 	player_1.visible = false;
 	wallBot.visible = false;
 	wallLH.visible = false;
@@ -170,7 +173,7 @@ function drawGameOver(){
 	targetGroup.visible = false;
 	tennisBalls.visible = false;
 	textSize(25)
-	text("Your Score Was " + score, 200,200)
+	text("Your Score Was " + score, 200, 200)
 }
 function shootTennisBalls() {
 	balls = new Sprite(player_1.x, player_1.y, 10);
