@@ -179,7 +179,7 @@ function shootTennisBalls() {
 	balls = new Sprite(player_1.x, player_1.y, 10);
 	balls.color = 'red'
 	balls.vel.x = 5;
-	//The tennis balls head toward the way the mouse is pointing. callculates the angle between the balls and the mouse.
+	//The tennis balls head toward the way the mouse is pointin. callculates the angle between the balls and the mouse.
 	//By recognizing this the ball is able to head towards the mouse	 
 	balls.direction = balls.angleTo(mouse)
 	//Added this feature so that the tennis balls don't collide with the player and go in weird directions.
