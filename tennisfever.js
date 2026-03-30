@@ -2,8 +2,7 @@
 // setup()
 /*******************************************************/
 let gameState = "menu";
-let timerStarted = false; // Acts like a switch for the timer
-let startTime = 0; // Store the amount of time since the game has started
+let startTime = 0; //Acts like a switch for the time when sapce bar is pressed
 let player_1, wallLH, wallBot, wallRH, wallTop, target, target2, balls
 let timeLimit = 10; // The timer has a time limit for 10 seconds
 let countdown = 0; // This keeps track of the time limit
@@ -77,7 +76,9 @@ function drawMenu() {
 	console.log("Menu Screen")
 	textSize(25)
 	text("Press Space Bar", 200, 200)
+	text("Use WASD or ARROWS to move", 50, 300)
 	if (kb.pressing('space')) {
+		startTime = int(millis()/1000) //Has the value of the time since thew setup function has tarted when you press space. 
 		gameState = 'play'
 	}
 }
@@ -150,9 +151,11 @@ function drawGame() {
 	if (player_1.collides(targetGroup)) {
 		gameState = 'gameover'
 	}
-		let currentTime = int(millis() / 1000); // Millis is the amount of milliseconds passsed since the setup function has started.
+		 currentTime = int(millis() / 1000 - startTime); // Millis is the amount of milliseconds passsed since the setup function has started.
 	// The int(millis()/1000) is there to convert the time to seconds. We have to divide the millis to convert the milliseconds to seconds.
 	//Int makes sure that there are no decimals for example - 2.5
+	//By minusing the startTime from the currernt time it ensures that that the timer only start when the space bar is pressed. 
+	//This is becuase it minuses the time of the setup function from the actual play time, making the timer always start at 0.
 	countdown = timeLimit - currentTime //Countdown is the time limit - the amount of time passed.
 	//If the time limit has passed, keep the countdown at 0
 	if (countdown < 0) {
