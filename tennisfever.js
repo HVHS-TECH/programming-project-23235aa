@@ -133,7 +133,7 @@ function drawGame() {
 	function func2Call(_target, _tennisBalls,) {
 		_target.remove();
 		_tennisBalls.remove();
-		let minDistanceFromPlayer = 300;
+		let minDistanceFromPlayer = 200;
 		do {
 			target2SpawnX = random(50, 500);
 			target2SpawnY = random(50, 500);
