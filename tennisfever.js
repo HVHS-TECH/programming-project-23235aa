@@ -10,8 +10,8 @@ let currentTime // the amount of time passed since the setup function is called
 let score = 0; // This is the score varible that I made. It's use comes further down.
 function preload() {
 
-	imgTennisplayer = loadImage('assets/images/tennisplayer.png');
-	imgTarget = loadImage('assets/images/tennistarget.png');
+	imgTennisplayer = loadImage('assets/images/tennisplayer.png.png');
+	imgTarget = loadImage('assets/images/tennistargets.png');
 }
 function setup() {
 	console.log("setup: ");
@@ -165,7 +165,7 @@ function drawGame() {
 	//This is becuase it minuses the time of the setup function from the actual play time, making the timer always start at 0.
 	countdown = timeLimit - currentTime //Countdown is the time limit - the amount of time passed.
 	//If the time limit has passed, keep the countdown at 0
-	if (countdown < 0) {
+	if (countdown <= 0) {
 		countdown = 0;
 		gameState = 'gameover' // If the time limit is 0 it goes to the game over screen becuase the game ends.
 	}
