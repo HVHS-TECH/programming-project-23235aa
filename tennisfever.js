@@ -35,8 +35,13 @@ function setup() {
 	imgTennisplayer.resize(50, 50);
 	tennisBalls = new Group();
 	targetGroup = new Group();
+	// Generating 5 targets at different distance, so that it away from player
+	// setting speed , friction and image for each target
+	// Also adding all targets into a group , so all targets can be controled at the samet time
 	for (i = 0; i < 5; i++) {
 		let minDistanceFromPlayer = 200;  //The minimum distance I want between the player and the target so they don't collide
+		let targetSpawnX;
+		let targetSpawnY;
 		do {
 			targetSpawnX = random(50, 500)//making sure that the target don't spawn at the same place and are clumped together.
 			//Also it keeps on choosing a new value of x until if the disatnce between target
@@ -134,6 +139,8 @@ function drawGame() {
 		_target.remove();
 		_tennisBalls.remove();
 		let minDistanceFromPlayer = 200;
+		let target2SpawnX;
+		let target2SpawnY;
 		do {
 			target2SpawnX = random(50, 500);
 			target2SpawnY = random(50, 500);
